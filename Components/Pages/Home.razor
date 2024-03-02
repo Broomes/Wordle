@@ -1,0 +1,249 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@inject WordService _wordService
+
+<PageTitle>Home</PageTitle>
+
+<h1>Wordle Clone</h1>
+
+<table style="width: 75%;">
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <InputText @bind-Value="Guess1" disabled="@Guess1_IsDisabled" />
+                        <b>@Guess1_Result</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <InputText @bind-Value="Guess2" disabled="@Guess2_IsDisabled" />
+                        <b>@Guess2_Result</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <InputText @bind-Value="Guess3" disabled="@Guess3_IsDisabled" />
+                        <b>@Guess3_Result</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <InputText @bind-Value="Guess4" disabled="@Guess4_IsDisabled" />
+                        <b>@Guess4_Result</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <InputText @bind-Value="Guess5" disabled="@Guess5_IsDisabled" />
+                        <b>@Guess5_Result</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button @onclick="SubmitButton_Clicked">SUBMIT</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td style="border: 1px solid gray; border-radius: 5px; padding: 1rem;">
+            <h2>
+                Correct Letters: <span style="color:green;">@CorrectLetterString</span>
+            </h2>
+            <br>
+            <h2>
+                Wrong Letters: <span style="color:red;">@WrongLetterString</span>
+            </h2>
+
+            @if (WonTheGame)
+            {
+                <img src="/images/you-won-youwin.gif" />
+            }
+        </td>
+    </tr>
+</table>
+
+
+
+
+
+
+
+
+
+@code {
+    private string Word = string.Empty;
+
+    private string Guess1 = string.Empty;
+    private string Guess2 = string.Empty;
+    private string Guess3 = string.Empty;
+    private string Guess4 = string.Empty;
+    private string Guess5 = string.Empty;
+
+    private string Guess1_Result = string.Empty;
+    private string Guess2_Result = string.Empty;
+    private string Guess3_Result = string.Empty;
+    private string Guess4_Result = string.Empty;
+    private string Guess5_Result = string.Empty;
+
+    private bool Guess1_IsDisabled = false;
+    private bool Guess2_IsDisabled = false;
+    private bool Guess3_IsDisabled = false;
+    private bool Guess4_IsDisabled = false;
+    private bool Guess5_IsDisabled = false;
+
+    private bool WonTheGame = false;
+
+    private string CorrectLetterString = string.Empty;
+    private string WrongLetterString = string.Empty;
+    private List<char> CorrectLettersList = new List<char>() { '_', '_', '_', '_', '_' };
+    private List<char> WrongLettersList = new List<char>();
+
+    protected override void OnInitialized()
+    {
+        Word = _wordService.GetFiveLetterWord();
+    }
+
+    private void SubmitButton_Clicked()
+    {
+        if (!Guess1.Equals(string.Empty))
+        {
+            Guess1_Result = (Word.Equals(Guess1)) ? "Correct" : "Wrong";
+            Guess1_IsDisabled = true;
+        }
+
+        if (!Guess2.Equals(string.Empty))
+        {
+            Guess2_Result = (Word.Equals(Guess2)) ? "Correct" : "Wrong";
+            Guess2_IsDisabled = true;
+        }
+
+        if (!Guess3.Equals(string.Empty))
+        {
+            Guess3_Result = (Word.Equals(Guess3)) ? "Correct" : "Wrong";
+            Guess3_IsDisabled = true;
+        }
+
+        if (!Guess4.Equals(string.Empty))
+        {
+            Guess4_Result = (Word.Equals(Guess4)) ? "Correct" : "Wrong";
+            Guess4_IsDisabled = true;
+        }
+        if (!Guess5.Equals(string.Empty))
+        {
+            Guess5_Result = (Word.Equals(Guess5)) ? "Correct" : "Wrong";
+            Guess5_IsDisabled = true;
+        }
+
+        foreach (char letter in Guess1)
+        {
+            if (Word.Contains(letter))
+            {
+                int index = 0;
+                foreach (char character in Word)
+                {
+                    if (character == letter)
+                    {
+                        CorrectLettersList[index] = letter;
+                    }
+                    index++;
+                }
+            }
+            else if (!Word.Contains(letter) && !WrongLettersList.Contains(letter))
+            {
+                WrongLettersList.Add(letter);
+            }
+        }
+
+        foreach (char letter in Guess2)
+        {
+            if (Word.Contains(letter))
+            {
+                int index = 0;
+                foreach (char character in Word)
+                {
+                    if (character == letter)
+                    {
+                        CorrectLettersList[index] = letter;
+                    }
+                    index++;
+                }
+            }
+            else if (!Word.Contains(letter) && !WrongLettersList.Contains(letter))
+            {
+                WrongLettersList.Add(letter);
+            }
+        }
+
+        foreach (char letter in Guess3)
+        {
+            if (Word.Contains(letter))
+            {
+                int index = 0;
+                foreach (char character in Word)
+                {
+                    if (character == letter)
+                    {
+                        CorrectLettersList[index] = letter;
+                    }
+                    index++;
+                }
+            }
+            else if (!Word.Contains(letter) && !WrongLettersList.Contains(letter))
+            {
+                WrongLettersList.Add(letter);
+            }
+        }
+
+        foreach (char letter in Guess4)
+        {
+            if (Word.Contains(letter))
+            {
+                int index = 0;
+                foreach (char character in Word)
+                {
+                    if (character == letter)
+                    {
+                        CorrectLettersList[index] = letter;
+                    }
+                    index++;
+                }
+            }
+            else if (!Word.Contains(letter) && !WrongLettersList.Contains(letter))
+            {
+                WrongLettersList.Add(letter);
+            }
+        }
+
+        foreach (char letter in Guess5)
+        {
+            if (Word.Contains(letter))
+            {
+                int index = 0;
+                foreach (char character in Word)
+                {
+                    if (character == letter)
+                    {
+                        CorrectLettersList[index] = letter;
+                    }
+                    index++;
+                }
+            }
+            else if (!Word.Contains(letter) && !WrongLettersList.Contains(letter))
+            {
+                WrongLettersList.Add(letter);
+            }
+        }
+
+        CorrectLetterString = new string(CorrectLettersList.ToArray());
+        WrongLetterString = new string(WrongLettersList.ToArray());
+
+        if (CorrectLetterString.Equals(Word))
+        {
+            WonTheGame = true;
+        }
+
+    }
+
+}
